@@ -142,7 +142,11 @@ end
 function GGRating:rate()
 
 	if self.market == GGRating.Market.Apple then
-		system.openURL( "itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=" .. self.appID )
+		if 7 <= tonumber(string.sub(system.getInfo("platformVersion"), 0, 1)) then
+			system.openURL( "itms-apps://itunes.apple.com/app/id" .. self.appID )
+		else
+			system.openURL( "itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=" .. self.appID )
+		end
 	elseif self.market == GGRating.Market.Google then
 		system.openURL( "https://play.google.com/store/apps/details?id=" .. self.appID )
 	elseif self.market == GGRating.Market.Amazon then
